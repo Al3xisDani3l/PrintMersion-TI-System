@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PrintMersion.Core.Interfaces;
+using PrintMersion.Infrastructure.Repositories;
 
 namespace PrintMersionAPIRest
 {
@@ -26,6 +28,12 @@ namespace PrintMersionAPIRest
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+
+            // Resolucion de dependencias
+
+            services.AddTransient<IAdministerRepository, AdministerRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
