@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PrintMersion.Core.Entities
+namespace Scaffolding.Data
 {
-    public  class Administer
+    public partial class Administer
     {
         public Administer()
         {
             LogsTools = new HashSet<LogsTools>();
-            Orders = new HashSet<Order>();
+            Orders = new HashSet<Orders>();
         }
 
         public int Id { get; set; }
@@ -20,6 +20,6 @@ namespace PrintMersion.Core.Entities
         public string Password { get; set; }
 
         public virtual ICollection<LogsTools> LogsTools { get; set; }
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Orders> Orders { get; set; }
     }
 }

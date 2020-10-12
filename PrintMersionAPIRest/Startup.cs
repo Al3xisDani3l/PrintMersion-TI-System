@@ -10,8 +10,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.SqlServer;
 using PrintMersion.Core.Interfaces;
 using PrintMersion.Infrastructure.Repositories;
+using PrintMersion.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using PrintMersion.Core.Entities;
+using AutoMapper;
 
 namespace PrintMersionAPIRest
 {
@@ -27,12 +32,21 @@ namespace PrintMersionAPIRest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
             services.AddControllers();
 
+            //m
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            //Agregamos y configuramos la base de datos.
+            services.AddDbContext<PrintMersionDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PrintMersionDB")));
+
+            
             // Resolucion de dependencias
 
-            services.AddTransient<IAdministerRepository, AdministerRepository>();
+            services.AddTransient<IRepository<Administer>, AdministerRepository>();
+            services.AddTransient<IRepository<Customer>, RepositoryBase<Customer,PrintMersionDBContext>>();
 
         }
 
