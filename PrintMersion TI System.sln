@@ -15,19 +15,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintMersion Android", "Pri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintMersion Web System", "PrintMersion Web System\PrintMersion Web System.csproj", "{1D8BDB54-E372-4097-A5F3-26860828EAF3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintMersion_Models", "Models\PrintMersion_Models.csproj", "{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintMersion.Api", "PrintMersionAPIRest\PrintMersion.Api.csproj", "{7579B080-FF24-4B71-98B5-DBD26D85A744}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintMersion.Core", "PrintMersion.Core\PrintMersion.Core.csproj", "{23D44889-46E4-480D-89D5-EB28A35ABF47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintMersion.Core", "PrintMersion.Core\PrintMersion.Core.csproj", "{23D44889-46E4-480D-89D5-EB28A35ABF47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintMersion.Infrastructure", "PrintMersion.Infrastructure\PrintMersion.Infrastructure.csproj", "{6825FA8D-542E-48FA-82F0-B9D355A6ED8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintMersion.Infrastructure", "PrintMersion.Infrastructure\PrintMersion.Infrastructure.csproj", "{6825FA8D-542E-48FA-82F0-B9D355A6ED8F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4009BA32-CA1B-45B5-A973-5AECD6DF3618}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintMersion.UnitTest", "PrintMersion.UnitTest\PrintMersion.UnitTest.csproj", "{9D186670-34D1-4FF7-AFC0-FFE19976D0C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintMersion.UnitTest", "PrintMersion.UnitTest\PrintMersion.UnitTest.csproj", "{9D186670-34D1-4FF7-AFC0-FFE19976D0C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintMersion.IntegrationTests", "PrintMersion.IntegrationTests\PrintMersion.IntegrationTests.csproj", "{4EEE15EC-3EAA-41ED-9208-4CA4F3E63D08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintMersion.IntegrationTests", "PrintMersion.IntegrationTests\PrintMersion.IntegrationTests.csproj", "{4EEE15EC-3EAA-41ED-9208-4CA4F3E63D08}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PrintMersion Api Proyect", "PrintMersion Api Proyect", "{2F2ED161-91DF-4CF1-9081-01A8248F2E15}"
 EndProject
@@ -191,26 +189,6 @@ Global
 		{1D8BDB54-E372-4097-A5F3-26860828EAF3}.Release|x64.Build.0 = Release|Any CPU
 		{1D8BDB54-E372-4097-A5F3-26860828EAF3}.Release|x86.ActiveCfg = Release|Any CPU
 		{1D8BDB54-E372-4097-A5F3-26860828EAF3}.Release|x86.Build.0 = Release|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Debug|ARM.Build.0 = Debug|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Debug|x64.Build.0 = Debug|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Debug|x86.Build.0 = Debug|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Release|ARM.ActiveCfg = Release|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Release|ARM.Build.0 = Release|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Release|ARM64.Build.0 = Release|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Release|x64.ActiveCfg = Release|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Release|x64.Build.0 = Release|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Release|x86.ActiveCfg = Release|Any CPU
-		{B94A858E-CF5E-4631-ACB2-2A7517A8D7D5}.Release|x86.Build.0 = Release|Any CPU
 		{7579B080-FF24-4B71-98B5-DBD26D85A744}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7579B080-FF24-4B71-98B5-DBD26D85A744}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7579B080-FF24-4B71-98B5-DBD26D85A744}.Debug|ARM.ActiveCfg = Debug|Any CPU

@@ -5,26 +5,21 @@ using System.Linq;
 using PrintMersion.Core.Entities;
 using PrintMersion.Core.Interfaces;
 using System.Threading.Tasks;
+using PrintMersion.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace PrintMersion.Infrastructure.Repositories
 {
- public class AdministerRepository:IAdministerRepository
+ public class AdministerRepository:RepositoryBase<Administer,PrintMersionDBContext>
     {
 
-        public async Task<IEnumerable<Administer>> GetAdministers()
+        public AdministerRepository(PrintMersionDBContext context):base(context)
         {
-            var administer = Enumerable.Range(1, 10).Select(x => new Administer
-            {
-                Id = x,
-                HiringDate = DateTime.Now,
-                Name = $"Soy el numero : {x}",
-                Image = $"https://misapis.com/{x}"        
-            }) ;
-
-            await Task.Delay(10);
-
-            return administer;
+           
         }
+
+       
+
        
     }
 }

@@ -3,11 +3,10 @@ using System.Collections.Generic;
 
 namespace PrintMersion.Core.Entities
 {
-    public  class Administer
+    public class Customer
     {
-        public Administer()
+        public Customer()
         {
-            LogsTools = new HashSet<LogsTools>();
             Orders = new HashSet<Order>();
         }
 
@@ -15,11 +14,10 @@ namespace PrintMersion.Core.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
+        public int? IdAddress { get; set; }
         public string Phone { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
 
-        public virtual ICollection<LogsTools> LogsTools { get; set; }
+        public virtual Address IdAddressNavigation { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
     }
 }
