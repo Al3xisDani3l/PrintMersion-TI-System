@@ -17,7 +17,7 @@ namespace PrintMersion.Api.Controllers
 
 
         //    private readonly IRepository<Administer> _administerRepository;
-        public AdministersController(IRepository<Administer> administerRepository):base(administerRepository)
+        public AdministersController(IRepository<Administer> administerRepository,IService<Administer> service):base(administerRepository,service)
         {
             
         }

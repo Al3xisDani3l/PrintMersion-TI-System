@@ -14,9 +14,9 @@ namespace PrintMersion.Core.Interfaces
 
         Task Post(T post);
 
-        Task Delete(T post);
+        Task<bool> Delete(int id);
 
-        Task Put(T post);
+        Task<bool> Put(T post);
 
         Task Patch(T post);
 

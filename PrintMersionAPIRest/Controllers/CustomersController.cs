@@ -13,7 +13,7 @@ namespace PrintMersion.Api.Controllers
     [ApiController]
     public class CustomersController : GenericController<Customer>
     {
-        public CustomersController(IRepository<Customer> repository) : base(repository)
+        public CustomersController(IRepository<Customer> repository,IService<Customer> service) : base(repository,service)
         {
 
         }

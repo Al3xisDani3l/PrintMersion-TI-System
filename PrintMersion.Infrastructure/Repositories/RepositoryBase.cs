@@ -18,6 +18,8 @@ namespace PrintMersion.Infrastructure.Repositories
 
         protected internal readonly bool _isPlural;
 
+       
+
         
 
         public RepositoryBase(TDbContext context)
@@ -28,14 +30,21 @@ namespace PrintMersion.Infrastructure.Repositories
         }
 
 
-        public virtual async Task Delete(TEntity post)
+        public virtual async Task<bool> Delete(int id)
         {
-            GetProperty().Remove(post);
-           await _context.SaveChangesAsync();
+
+            var currentPost = await Get(id);
+
+            GetProperty().Remove(currentPost);
+              
+          int rows = await _context.SaveChangesAsync();
+
+            return rows > 0;
         }
 
         public virtual async Task<IEnumerable<TEntity>> Get()
         {
+            
             return await GetProperty().ToListAsync();
             
         }
@@ -58,36 +67,62 @@ namespace PrintMersion.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public virtual async Task Put(TEntity post)
+        public virtual async Task<bool> Put(TEntity post)
         {
-            GetProperty().Update(post);
-            await _context.SaveChangesAsync();
+            var currentPost = await Get((int)post.GetType().GetProperty("Id").GetValue(post));
+            await UpdateProperty(currentPost, post);
+            return await _context.SaveChangesAsync() > 0;
         
 
         }
 
-
-
-        private DbSet<TEntity> GetProperty()
+        protected virtual async Task<TEntity> UpdateProperty(TEntity current, TEntity uptadeEntity)
         {
-            if (_isPlural)
+  
+
+                var properties = current.GetType().GetProperties();
+
+                foreach (var item in properties)
+                {
+                    string name = item.Name;
+
+                    if (name != "Id")
+                    {
+                        item.SetValue(current, item.GetValue(name));
+                    }
+
+                }
+
+          return    await Task.FromResult<TEntity>(current);
+      
+             
+
+
+
+
+        }
+
+
+        private DbSet<TEntity> GetProperty(bool IsLetterSnesesary = true)
+        {
+
+            var _contextType = _context.GetType();
+
+            PropertyInfo _propertyInfo;
+
+            if (!_isPlural || IsLetterSnesesary )
             {
+                _propertyInfo = _contextType.GetProperty(_nameT + "s");
 
-
-
-                var _contextType = _context.GetType();
-                var _propertyInfo = _contextType.GetProperty(_nameT);
-                var _value = _propertyInfo.GetValue(_context, new object[] { });
-                return _value as DbSet<TEntity>;
-
+            
             }
             else
             {
-                var _contextType = _context.GetType();
-                var _propertyInfo = _contextType.GetProperty(_nameT + "s");
-                var _value = _propertyInfo.GetValue(_context, new object[] { });
-                return _value as DbSet<TEntity>;
+                _propertyInfo = _contextType.GetProperty(_nameT);
             }
+
+            var _value = _propertyInfo.GetValue(_context);
+            return _value as DbSet<TEntity>;
         }
     }
 }

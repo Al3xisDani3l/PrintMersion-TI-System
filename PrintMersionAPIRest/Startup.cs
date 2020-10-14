@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 using PrintMersion.Core.Interfaces;
 using PrintMersion.Infrastructure.Repositories;
 using PrintMersion.Infrastructure.Data;
+using PrintMersion.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using PrintMersion.Core.Entities;
 using AutoMapper;
@@ -45,9 +46,9 @@ namespace PrintMersionAPIRest
             
             // Resolucion de dependencias
 
-            services.AddTransient<IRepository<Administer>, AdministerRepository>();
+            services.AddTransient<IRepository<Administer>, RepositoryBase<Administer,PrintMersionDBContext>>();
             services.AddTransient<IRepository<Customer>, RepositoryBase<Customer,PrintMersionDBContext>>();
-
+            services.AddTransient<IService<Administer>,BaseService<Administer>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
