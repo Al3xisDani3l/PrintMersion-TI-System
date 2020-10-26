@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using PrintMersion.Core.Interfaces;
 namespace PrintMersion.Core.Entities
 {
-    public partial class CatalogsPictures
+    public partial class CatalogsPictures 
     {
         public int IdCatalog { get; set; }
         public int IdPicture { get; set; }

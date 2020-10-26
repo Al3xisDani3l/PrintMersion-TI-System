@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using PrintMersion_Core_Bot_System;
-
 namespace PrintMersion_Core_Bot_System.Tests.Dialogs.TestData
 {
     /// <summary>

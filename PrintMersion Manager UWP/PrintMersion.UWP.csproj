@@ -7,7 +7,7 @@
     <ProjectGuid>{4197FD3E-55A4-4C14-8458-BCE21D23E57D}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PrintMersion_Manager_UWP</RootNamespace>
+    <RootNamespace>PrintMersion.UWP</RootNamespace>
     <AssemblyName>PrintMersion Manager UWP</AssemblyName>
     <DefaultLanguage>es-ES</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
@@ -119,12 +119,65 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\EditImageCtrl.xaml.cs">
+      <DependentUpon>EditImageCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extencions\ExtencionsServices.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\MenuPage.xaml.cs">
+    <Compile Include="MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Administracion\PersonalView.xaml.cs">
+      <DependentUpon>PersonalView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CategoricalBase.cs" />
+    <Compile Include="Views\ConfiguracionesView.xaml.cs">
+      <DependentUpon>ConfiguracionesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditarAdministradorView.xaml.cs">
+      <DependentUpon>EditarAdministradorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Equipo_De_Trabajo\HerramientasView.xaml.cs">
+      <DependentUpon>HerramientasView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Equipo_De_Trabajo\Maquinas3DView.xaml.cs">
+      <DependentUpon>Maquinas3DView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Equipo_De_Trabajo\MaquinasLaserView.xaml.cs">
+      <DependentUpon>MaquinasLaserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Materiales\StockConsumiblesView.xaml.cs">
+      <DependentUpon>StockConsumiblesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Materiales\StockAgotadoView.xaml.cs">
+      <DependentUpon>StockAgotadoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Materiales\StockDisponibleView.xaml.cs">
+      <DependentUpon>StockDisponibleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pedidos\OrdenesAbiertasView.xaml.cs">
+      <DependentUpon>OrdenesAbiertasView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pedidos\OrdenesCanceladasView.xaml.cs">
+      <DependentUpon>OrdenesCanceladasView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pedidos\OrdenesCompletadasView.xaml.cs">
+      <DependentUpon>OrdenesCompletadasView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Ventas\EstadisticasGeneralesView.xaml.cs">
+      <DependentUpon>EstadisticasGeneralesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Ventas\VentasCanceladasView.xaml.cs">
+      <DependentUpon>VentasCanceladasView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Ventas\VentasConcretadasView.xaml.cs">
+      <DependentUpon>VentasConcretadasView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -147,7 +200,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Assets\ThemeLuxary.xaml">
+    <Page Include="Controls\EditImageCtrl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\ThemeLuxary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -155,7 +216,71 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\MenuPage.xaml">
+    <Page Include="Themes\PinkTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Administracion\PersonalView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConfiguracionesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditarAdministradorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Equipo_De_Trabajo\HerramientasView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Equipo_De_Trabajo\Maquinas3DView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Equipo_De_Trabajo\MaquinasLaserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Materiales\StockConsumiblesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Materiales\StockAgotadoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Materiales\StockDisponibleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pedidos\OrdenesAbiertasView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pedidos\OrdenesCanceladasView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pedidos\OrdenesCompletadasView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Ventas\EstadisticasGeneralesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Ventas\VentasCanceladasView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Ventas\VentasConcretadasView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -165,11 +290,21 @@
       <Version>6.2.10</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>6.1.1</Version>
+      <Version>7.0.0-preview3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.4.3</Version>
+      <Version>2.5.0-prerelease.200923002</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PrintMersion.Core\PrintMersion.Core.csproj">
+      <Project>{23d44889-46e4-480d-89d5-eb28a35abf47}</Project>
+      <Name>PrintMersion.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PrintMersion.UWP.Infrastructure\PrintMersion.UWP.Infrastructure.csproj">
+      <Project>{cff89bff-b0be-4dcd-9882-e95c278ea775}</Project>
+      <Name>PrintMersion.UWP.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

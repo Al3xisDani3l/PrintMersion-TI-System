@@ -1,8 +1,6 @@
-﻿
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace PrintMersion_Manager_UWP
+namespace PrintMersion.UWP
 {
     [TestClass]
     public class UnitTest1

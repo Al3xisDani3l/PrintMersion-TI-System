@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using PrintMersion.Core.Enumerations;
+﻿using PrintMersion.Core.Enumerations;
+using System;
 namespace PrintMersion.Core.Interfaces
 {
     public interface IValidator<TEntity>
@@ -12,7 +10,7 @@ namespace PrintMersion.Core.Interfaces
 
         string Description { get; set; }
 
-        bool IsValid { get; set; } 
+        bool IsValid { get; set; }
 
     }
 }

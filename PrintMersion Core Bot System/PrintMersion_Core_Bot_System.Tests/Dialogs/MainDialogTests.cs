@@ -1,12 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using PrintMersion_Core_Bot_System.Tests.Common;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Testing;
@@ -17,11 +11,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;
-using Xunit;
-using Xunit.Abstractions;
-
 using PrintMersion_Core_Bot_System.CognitiveModels;
 using PrintMersion_Core_Bot_System.Dialogs;
+using PrintMersion_Core_Bot_System.Tests.Common;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace PrintMersion_Core_Bot_System.Tests.Dialogs
 {

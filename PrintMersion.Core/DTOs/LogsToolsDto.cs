@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using PrintMersion.Core.Interfaces;
+using System;
 namespace PrintMersion.Core.DTOs
 {
-    public  class LogsToolsDto
+    public class LogsToolsDto : IEntity
     {
         public int Id { get; set; }
         public int IdTool { get; set; }
@@ -11,6 +10,6 @@ namespace PrintMersion.Core.DTOs
         public DateTime StartUse { get; set; }
         public DateTime EndUse { get; set; }
 
-        
+
     }
 }

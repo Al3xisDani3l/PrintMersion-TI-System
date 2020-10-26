@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
 using PrintMersion.Core.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace PrintMersion.Core.Interfaces
 {
-  public interface IDBContextModel
+    public interface IDBContextModel
     {
         DbSet<Address> Address { get; set; }
         DbSet<Administer> Administers { get; set; }

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using PrintMersion.Core.Interfaces;
 namespace PrintMersion.Core.Entities
 {
-    public class Picture
+    public class Picture : IEntity
     {
         public int Id { get; set; }
         public string Metadata { get; set; }

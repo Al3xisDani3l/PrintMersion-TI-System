@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using PrintMersion.Core.Interfaces;
+using System;
 namespace PrintMersion.Core.Entities
 {
-    public  class Order
+    public class Order : IEntity
     {
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }

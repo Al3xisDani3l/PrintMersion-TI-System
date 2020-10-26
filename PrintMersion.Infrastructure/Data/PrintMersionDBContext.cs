@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 using PrintMersion.Core.Entities;
 using PrintMersion.Core.Interfaces;
 
@@ -35,11 +33,11 @@ namespace PrintMersion.Infrastructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-//                optionsBuilder.UseSqlServer("Data Source=SATELLITE-ALEXI\\SQLEXPRESS;Initial Catalog=PrintMersionDB;Integrated Security=True");
-//            }
+            //            if (!optionsBuilder.IsConfigured)
+            //            {
+            //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+            //                optionsBuilder.UseSqlServer("Data Source=SATELLITE-ALEXI\\SQLEXPRESS;Initial Catalog=PrintMersionDB;Integrated Security=True");
+            //            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -50,7 +48,7 @@ namespace PrintMersion.Infrastructure.Data
                     .HasName("UQ__Address__3214EC0650DF4974")
                     .IsUnique();
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.City)
                     .HasColumnName("city")
@@ -112,7 +110,7 @@ namespace PrintMersion.Infrastructure.Data
                     .IsUnicode(false);
 
                 entity.Property(e => e.Phone)
-                    .HasMaxLength(10)
+                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserName)
@@ -146,7 +144,7 @@ namespace PrintMersion.Infrastructure.Data
                     .HasName("UQ__Catalogs__3214EC069D79A489")
                     .IsUnique();
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Description).IsUnicode(false);
 
@@ -252,7 +250,7 @@ namespace PrintMersion.Infrastructure.Data
                     .HasName("UQ__LogsTool__3214EC06BB600FAA")
                     .IsUnique();
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.EndUse).HasColumnType("datetime");
 
@@ -277,7 +275,7 @@ namespace PrintMersion.Infrastructure.Data
                     .HasName("UQ__Orders__3214EC068F9DCEBA")
                     .IsUnique();
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.DeliveryDate).HasColumnType("datetime");
 
@@ -320,7 +318,7 @@ namespace PrintMersion.Infrastructure.Data
                     .HasName("UQ__Pictures__3214EC069D4153E6")
                     .IsUnique();
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.DataRaw)
                     .HasMaxLength(1)
@@ -335,7 +333,7 @@ namespace PrintMersion.Infrastructure.Data
                     .HasName("UQ__Products__3214EC0658BFAAF7")
                     .IsUnique();
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Category)
                     .IsRequired()
@@ -375,7 +373,7 @@ namespace PrintMersion.Infrastructure.Data
                     .HasName("UQ__Tools__3214EC06EEF22EC7")
                     .IsUnique();
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Description).IsUnicode(false);
 

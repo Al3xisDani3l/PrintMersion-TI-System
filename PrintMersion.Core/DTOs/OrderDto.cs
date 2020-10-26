@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using PrintMersion.Core.Interfaces;
+using System;
 namespace PrintMersion.Core.DTOs
 {
-    public  class OrderDto
+    public class OrderDto : IEntity
     {
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }
@@ -19,6 +18,6 @@ namespace PrintMersion.Core.DTOs
         public int IdCustomer { get; set; }
         public int? IdAdminister { get; set; }
 
-     
+
     }
 }

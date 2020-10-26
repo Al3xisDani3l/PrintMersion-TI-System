@@ -1,12 +1,11 @@
-﻿using System;
-using Xunit;
-using System.Reflection;
+﻿using Newtonsoft.Json;
 using PrintMersion.Core.Entities;
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
-using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System.Collections.Generic;
+using Xunit;
 
 namespace PrintMersion.UnitTest
 {
@@ -17,7 +16,7 @@ namespace PrintMersion.UnitTest
 
 
         [Fact]
-        public async Task  GetTest()
+        public async Task GetTest()
         {
             config();
 
@@ -26,13 +25,13 @@ namespace PrintMersion.UnitTest
 
 
 
-          var response =  await client.GetAsync("api/administer");
+            var response = await client.GetAsync("api/administer");
 
             if (response.IsSuccessStatusCode)
             {
                 var serialize = await response.Content.ReadAsStringAsync();
                 result = JsonConvert.DeserializeObject<List<Administer>>(serialize);
-               
+
             }
 
         }

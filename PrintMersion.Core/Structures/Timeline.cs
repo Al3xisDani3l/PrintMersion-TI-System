@@ -17,16 +17,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace PrintMersion.Core.Structures
 {
     /// <summary>
     /// A collection of <see cref="DateTime"/> and <see cref="TValue"/> sorted by <see cref="DateTime"/> field.
     /// </summary>
     /// <typeparam name="TValue">Value associated with a <see cref="DateTime"/>.</typeparam>
-    public class Timeline<TValue> :
-        ICollection<(DateTime Time, TValue Value)>,
-        IEquatable<Timeline<TValue>>
+    public class Timeline<TValue> : ICollection<(DateTime Time, TValue Value)>, IEquatable<Timeline<TValue>>
     {
         private List<(DateTime Time, TValue Value)> timeline = new List<(DateTime Time, TValue Value)>();
 
@@ -85,6 +82,9 @@ namespace PrintMersion.Core.Structures
         /// </summary>
         public int ValuesCount => GetAllValues().Length;
 
+
+
+
         /// <summary>
         /// Get all values associated with <paramref name="time"/>.
         /// </summary>
@@ -100,6 +100,7 @@ namespace PrintMersion.Core.Structures
                     if (timeline[i].Time == time)
                     {
                         timeline.RemoveAt(i);
+
                     }
                 }
 
@@ -621,5 +622,7 @@ namespace PrintMersion.Core.Structures
         {
             return timeline.GetEnumerator();
         }
+
+
     }
 }

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using PrintMersion.Core.Interfaces;
+using System;
 
 namespace PrintMersion.Core.Entities
 {
-    public class LogsTools
+    public class LogsTools : IEntity
     {
         public int Id { get; set; }
         public int IdTool { get; set; }

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using PrintMersion.Core.Interfaces;
 using System.Collections.Generic;
 
 namespace PrintMersion.Core.Entities
 {
-    public class Customer
+    public class Customer : IEntity
     {
         public Customer()
         {

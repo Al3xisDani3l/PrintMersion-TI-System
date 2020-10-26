@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PrintMersion.Core.Entities
+﻿namespace PrintMersion.Core.Entities
 {
     public partial class ProductsPictures
     {

@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Moq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PrintMersion_Core_Bot_System.Tests.Common
 {

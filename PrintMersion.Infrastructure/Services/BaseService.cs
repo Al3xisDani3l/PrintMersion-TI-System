@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using PrintMersion.Core.Enumerations;
+﻿using PrintMersion.Core.Enumerations;
 using PrintMersion.Core.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace PrintMersion.Infrastructure.Services
@@ -39,6 +37,7 @@ namespace PrintMersion.Infrastructure.Services
 
         public virtual bool ExecuteAllValidator(TEntity entity, Operation operation, bool needValidation = true)
         {
+            this.ClearResults();
             var validatorForThis = _validators.Where(v => v.Operation == operation || v.Operation == Operation.All);
             bool approved = true;
 
@@ -49,11 +48,11 @@ namespace PrintMersion.Infrastructure.Services
 
                 if (item.IsValid)
                 {
-                    Approbed.ToList().Add(item);
+                    (Approbed as List<IValidator<TEntity>>).Add(item);
                 }
                 else
                 {
-                    Disapprobed.ToList().Add(item);
+                    (Disapprobed as List<IValidator<TEntity>>).Add(item);
                     approved = false;
 
                 }
@@ -112,14 +111,14 @@ namespace PrintMersion.Infrastructure.Services
             {
                 if (item.GetInterfaces().Contains(typeof(IValidator<TEntity>)))
                 {
-                    IValidator<TEntity> instance =(IValidator<TEntity>) Activator.CreateInstance(item);
+                    IValidator<TEntity> instance = (IValidator<TEntity>)Activator.CreateInstance(item);
                     valis.Add(instance);
-                       
+
                 }
             }
 
             return valis;
-        
+
         }
 
         private static IEnumerable<Type> GetNamespacesInAssembly(string namespaces)
@@ -130,10 +129,14 @@ namespace PrintMersion.Infrastructure.Services
             {
                 foreach (var t in item.GetTypes())
                 {
-                    if (t.Namespace.Contains(namespaces))
+                    if (!string.IsNullOrEmpty(t.Namespace))
                     {
-                        types.Add(t);
+                        if (t.Namespace.Contains(namespaces))
+                        {
+                            types.Add(t);
+                        }
                     }
+
                 }
             }
 

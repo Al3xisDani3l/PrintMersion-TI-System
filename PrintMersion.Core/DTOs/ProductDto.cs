@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using PrintMersion.Core.Interfaces;
 namespace PrintMersion.Core.DTOs
 {
-    public class ProductDto
+    public class ProductDto : IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

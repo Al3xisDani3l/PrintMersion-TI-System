@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using PrintMersion.Core.Interfaces;
 namespace PrintMersion.Core.DTOs
 {
-    public class ToolDto
+    public class ToolDto : IEntity
     {
-        
+
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -14,6 +12,6 @@ namespace PrintMersion.Core.DTOs
         public string Status { get; set; }
         public string Type { get; set; }
 
-      
+
     }
 }

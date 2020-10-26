@@ -1,24 +1,23 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
 
 namespace PrintMersion.Infrastructure.Mappings
 {
-  public  class AutomapperProfile:Profile
+    public class AutomapperProfile : Profile
     {
         public AutomapperProfile()
         {
             AddProfileEntityToDto("PrintMersion.Core.Entities", "PrintMersion.Core.DTOs", "Dto");
             AddProfileDtoToEntity("PrintMersion.Core.Entities", "PrintMersion.Core.DTOs", "Dto");
-                
-            
+
+
         }
 
 
-       internal void AddProfileEntityToDto(string namespaceEntity,string namespaceDto,string remove)
+        internal void AddProfileEntityToDto(string namespaceEntity, string namespaceDto, string remove)
         {
 
             var match = getTypes(namespaceEntity, namespaceDto, remove);
@@ -30,9 +29,9 @@ namespace PrintMersion.Infrastructure.Mappings
 
         }
 
-        internal void AddProfileDtoToEntity(string namespaceEntity, string namespaceDto,string remove)
+        internal void AddProfileDtoToEntity(string namespaceEntity, string namespaceDto, string remove)
         {
-            var match = getTypes( namespaceDto, namespaceEntity, remove);
+            var match = getTypes(namespaceDto, namespaceEntity, remove);
 
             foreach (var item in match)
             {
@@ -42,7 +41,7 @@ namespace PrintMersion.Infrastructure.Mappings
         }
 
 
-        private Dictionary<Type,Type> getTypes(string key,string value,string remove)
+        private Dictionary<Type, Type> getTypes(string key, string value, string remove)
         {
             var typesKeys = GetNamespacesInAssembly(key);
 
@@ -54,7 +53,7 @@ namespace PrintMersion.Infrastructure.Mappings
             {
                 foreach (var valu in typesValue)
                 {
-                    if (item.Name.Replace(remove,"") == valu.Name.Replace(remove,""))
+                    if (item.Name.Replace(remove, "") == valu.Name.Replace(remove, ""))
                     {
                         match.Add(item, valu);
                         break;
@@ -65,7 +64,7 @@ namespace PrintMersion.Infrastructure.Mappings
             }
 
             return match;
-                
+
         }
 
         private static IEnumerable<Type> GetNamespacesInAssembly(string namespaces)
@@ -84,10 +83,10 @@ namespace PrintMersion.Infrastructure.Mappings
             }
 
             return types;
-            
-          
 
-         
+
+
+
         }
 
     }

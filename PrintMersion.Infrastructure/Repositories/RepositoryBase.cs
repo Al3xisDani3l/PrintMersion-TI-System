@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using PrintMersion.Core.Interfaces;
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Reflection;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace PrintMersion.Infrastructure.Repositories
 {
-    public class RepositoryBase<TEntity,TDbContext> : IRepository<TEntity> where TDbContext : DbContext where TEntity :class, new()
+    public class RepositoryBase<TEntity, TDbContext> : IRepository<TEntity> where TDbContext : DbContext where TEntity : class, new()
     {
 
         protected internal readonly TDbContext _context;
@@ -18,9 +16,9 @@ namespace PrintMersion.Infrastructure.Repositories
 
         protected internal readonly bool _isPlural;
 
-       
 
-        
+
+
 
         public RepositoryBase(TDbContext context)
         {
@@ -36,17 +34,17 @@ namespace PrintMersion.Infrastructure.Repositories
             var currentPost = await Get(id);
 
             GetProperty().Remove(currentPost);
-              
-          int rows = await _context.SaveChangesAsync();
+
+            int rows = await _context.SaveChangesAsync();
 
             return rows > 0;
         }
 
         public virtual async Task<IEnumerable<TEntity>> Get()
         {
-            
+
             return await GetProperty().ToListAsync();
-            
+
         }
 
         public virtual async Task<TEntity> Get(int id)
@@ -61,10 +59,10 @@ namespace PrintMersion.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public virtual async Task Post(TEntity post)
+        public virtual async Task<bool> Post(TEntity post)
         {
             await GetProperty().AddAsync(post);
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public virtual async Task<bool> Put(TEntity post)
@@ -72,30 +70,30 @@ namespace PrintMersion.Infrastructure.Repositories
             var currentPost = await Get((int)post.GetType().GetProperty("Id").GetValue(post));
             await UpdateProperty(currentPost, post);
             return await _context.SaveChangesAsync() > 0;
-        
+
 
         }
 
         protected virtual async Task<TEntity> UpdateProperty(TEntity current, TEntity uptadeEntity)
         {
-  
 
-                var properties = current.GetType().GetProperties();
 
-                foreach (var item in properties)
+            var properties = current.GetType().GetProperties();
+
+            foreach (var item in properties)
+            {
+                string name = item.Name;
+
+                if (name != "Id")
                 {
-                    string name = item.Name;
-
-                    if (name != "Id")
-                    {
-                        item.SetValue(current, item.GetValue(name));
-                    }
-
+                    item.SetValue(current, item.GetValue(name));
                 }
 
-          return    await Task.FromResult<TEntity>(current);
-      
-             
+            }
+
+            return await Task.FromResult<TEntity>(current);
+
+
 
 
 
@@ -110,11 +108,11 @@ namespace PrintMersion.Infrastructure.Repositories
 
             PropertyInfo _propertyInfo;
 
-            if (!_isPlural || IsLetterSnesesary )
+            if (!_isPlural || IsLetterSnesesary)
             {
                 _propertyInfo = _contextType.GetProperty(_nameT + "s");
 
-            
+
             }
             else
             {

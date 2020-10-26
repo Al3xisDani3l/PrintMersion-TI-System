@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PrintMersion.Infrastructure.Repositories;
-using PrintMersion.Core.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
 using PrintMersion.Core.Entities;
+using PrintMersion.Core.Interfaces;
 
 namespace PrintMersion.Api.Controllers
 {
@@ -17,9 +11,9 @@ namespace PrintMersion.Api.Controllers
 
 
         //    private readonly IRepository<Administer> _administerRepository;
-        public AdministersController(IRepository<Administer> administerRepository,IService<Administer> service):base(administerRepository,service)
+        public AdministersController(IRepository<Administer> administerRepository, IService<Administer> service) : base(administerRepository, service)
         {
-            
+
         }
 
         //    [HttpGet]

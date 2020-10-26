@@ -1,7 +1,5 @@
-﻿using System;
+﻿using PrintMersion.Core.Enumerations;
 using System.Collections.Generic;
-using System.Text;
-using PrintMersion.Core.Enumerations;
 
 namespace PrintMersion.Core.Interfaces
 {
@@ -12,7 +10,7 @@ namespace PrintMersion.Core.Interfaces
 
         IEnumerable<IValidator<TEntity>> Disapprobed { get; set; }
 
-        IEnumerable<IValidator<TEntity>>  Validators { get; }
+        IEnumerable<IValidator<TEntity>> Validators { get; }
 
         bool ExecuteAllValidator(TEntity entity, Operation operation, bool needValidation = true);
 

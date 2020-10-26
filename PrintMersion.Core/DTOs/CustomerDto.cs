@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using PrintMersion.Core.Interfaces;
 namespace PrintMersion.Core.DTOs
 {
-    public class CustomerDto
+    public class CustomerDto : IEntity
     {
-       
+
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -13,6 +11,6 @@ namespace PrintMersion.Core.DTOs
         public int? IdAddress { get; set; }
         public string Phone { get; set; }
 
-      
+
     }
 }

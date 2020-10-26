@@ -30,7 +30,7 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="PrintMersion_Manager_UWP.App">
+      EntryPoint="PrintMersion.UWP.App">
       <uap:VisualElements
         DisplayName="PrintMersion Manager UWP"
         Square150x150Logo="Assets\Square150x150Logo.png"
@@ -40,6 +40,9 @@
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.print3DWorkflow"/>
+      </Extensions>
     </Application>
   </Applications>
 

@@ -4,7 +4,7 @@
                     xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
                     xmlns:BelowWindows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract, 7)">
     <ResourceDictionary.ThemeDictionaries>
-        <ResourceDictionary x:Key="Default">
+        <ResourceDictionary x:Key="_Default">
             <ResourceDictionary.MergedDictionaries>
                 <Windows10version1809:ColorPaletteResources Accent="#FF75734B" AltHigh="#FF000000" AltLow="#FF000000" AltMedium="#FF000000" AltMediumHigh="#FF000000" AltMediumLow="#FF000000" BaseHigh="#FFFFFFFF" BaseLow="#FFB0880C" BaseMedium="#FFDAC47D" BaseMediumHigh="#FFE5D399" BaseMediumLow="#FFC5A644" ChromeAltLow="#FFE5D399" ChromeBlackHigh="#FF000000" ChromeBlackLow="#FFE5D399" ChromeBlackMedium="#FF000000" ChromeBlackMediumLow="#FF000000" ChromeDisabledHigh="#FFB0880C" ChromeDisabledLow="#FFDAC47D" ChromeGray="#FFD0B561" ChromeHigh="#FFD0B561" ChromeLow="#FF634102" ChromeMedium="#FF765305" ChromeMediumLow="#FF9D760A" ChromeWhite="#FFFFFFFF" ListLow="#FF765305" ListMedium="#FFB0880C" />
                 <ResourceDictionary>
@@ -39,7 +39,7 @@
                     <Color x:Key="SystemRevealListLowColor">#FF765305</Color>
                     <Color x:Key="SystemRevealListMediumColor">#FFB0880C</Color>
                     <AcrylicBrush x:Key="SystemControlAcrylicWindowBrush" BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemChromeAltHighColor}" TintOpacity="0.8" FallbackColor="{ThemeResource SystemChromeMediumColor}" />
-                    <AcrylicBrush x:Key="ApplicationPageBackgroundThemeBrushBlue" BackgroundSource="HostBackdrop" TintColor="#0C1729" TintOpacity="0.7" AlwaysUseFallback="True"/>
+                    <AcrylicBrush x:Key="SystemControlAltLowAcrylicWindowBrushBlue" BackgroundSource="HostBackdrop" TintColor="#0C1729" TintOpacity="0.7" AlwaysUseFallback="True"/>
                     <!-- Override system shape defaults -->
                     <CornerRadius x:Key="ControlCornerRadius">0,0,0,0</CornerRadius>
                     <CornerRadius x:Key="OverlayCornerRadius">0,0,0,0</CornerRadius>
@@ -115,7 +115,7 @@
                     <Color x:Key="SystemRevealListLowColor">#FFDAC47D</Color>
                     <Color x:Key="SystemRevealListMediumColor">#FFB0880C</Color>
                     <AcrylicBrush x:Key="SystemControlAcrylicWindowBrush" BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemChromeAltHighColor}" TintOpacity="0.8" FallbackColor="{ThemeResource SystemChromeMediumColor}" />
-                    <AcrylicBrush x:Key="ApplicationPageBackgroundThemeBrushBlue" BackgroundSource="HostBackdrop" TintColor="#0C1729" TintOpacity="0.7" AlwaysUseFallback="True"/>
+                    <AcrylicBrush x:Key="SystemControlAltLowAcrylicWindowBrushBlue" BackgroundSource="HostBackdrop" TintColor="#0C1729" TintOpacity="0.7" AlwaysUseFallback="True"/>
                     <!-- Override system shape defaults -->
                     <CornerRadius x:Key="ControlCornerRadius">0,0,0,0</CornerRadius>
                     <CornerRadius x:Key="OverlayCornerRadius">0,0,0,0</CornerRadius>

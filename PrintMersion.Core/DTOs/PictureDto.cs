@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using PrintMersion.Core.Interfaces;
 namespace PrintMersion.Core.DTOs
 {
-    public class PictureDto
+    public class PictureDto : IEntity
     {
         public int Id { get; set; }
         public string Metadata { get; set; }

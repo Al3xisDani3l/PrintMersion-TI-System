@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PrintMersion.Api.Responses;
+using PrintMersion.Core.Exceptions;
 using PrintMersion.Core.Interfaces;
-
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace PrintMersion.Api.Controllers
 {
     [ApiController]
-    public class GenericController<TEntity> : ControllerBase where TEntity:class,new()
+    public class GenericController<TEntity> : ControllerBase, IController<TEntity> where TEntity : class, IEntity, new()
     {
 
         private readonly IRepository<TEntity> _Repository;
@@ -22,16 +20,19 @@ namespace PrintMersion.Api.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Retrieve all <see cref="TEntity"/>
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public virtual async Task<IActionResult> Get()
         {
-            
+
             var result = await _Repository.Get();
             var response = new ApiResponse<IEnumerable<TEntity>>(result);
 
             return Ok(response);
         }
-
         [HttpGet("{id}")]
         public virtual async Task<IActionResult> Get(int id)
         {
@@ -39,40 +40,38 @@ namespace PrintMersion.Api.Controllers
 
 
             var result = await _Repository.Get(id);
-            if (_service.ExecuteAllValidator(result,Core.Enumerations.Operation.GetId))
+            if (_service.ExecuteAllValidator(result, Core.Enumerations.Operation.GetId))
             {
                 var response = new ApiResponse<TEntity>(result);
+
 
                 return Ok(response);
             }
             else
             {
-                return BadRequest();
+                throw new BusisnessException($"Ningun usuario con el Id : {id}") { Details = _service.Disapprobed, Status = (int)HttpStatusCode.NotFound };
             }
-            
 
-           
+
+
         }
-
         [HttpPost]
-        public virtual async Task<IActionResult> post(TEntity entity)
+        public virtual async Task<IActionResult> Post(TEntity entity)
         {
-            if (_service.ExecuteAllValidator(entity, Core.Enumerations.Operation.Post)) 
+            if (_service.ExecuteAllValidator(entity, Core.Enumerations.Operation.Post))
             {
-                await _Repository.Post(entity);
-               
+               var result = await _Repository.Post(entity);
+                var response = new ApiResponse<bool>(result);
+
+                _service.ClearResults();
+                return Ok(response);
             }
             else
             {
-
+                throw new BusisnessException("Esto es una Prueba") { Details = _service.Disapprobed, Status = (int)HttpStatusCode.BadRequest };
             }
-            var response = new ApiResponse<TEntity>(entity);
 
-
-            _service.ClearResults();
-            return Ok(response);
         }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -91,7 +90,7 @@ namespace PrintMersion.Api.Controllers
             return Ok(response);
         }
 
-       
+
 
     }
 }

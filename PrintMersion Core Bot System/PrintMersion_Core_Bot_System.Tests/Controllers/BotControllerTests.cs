@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
@@ -10,9 +8,10 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Moq;
-using Xunit;
-
 using PrintMersion_Core_Bot_System.Controllers;
+using System.Threading;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace PrintMersion_Core_Bot_System.Tests.Controllers
 {

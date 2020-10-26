@@ -1,9 +1,8 @@
-﻿using System;
+﻿using PrintMersion.Core.Interfaces;
 using System.Collections.Generic;
-
 namespace PrintMersion.Core.Entities
 {
-    public  class Tool
+    public class Tool : IEntity
     {
         public Tool()
         {

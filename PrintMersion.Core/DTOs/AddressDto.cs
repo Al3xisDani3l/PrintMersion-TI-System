@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using PrintMersion.Core.Interfaces;
 namespace PrintMersion.Core.DTOs
 {
-    public class AddressDto
+    public class AddressDto : IEntity
     {
-        
 
-     
+
+
         public string Street { get; set; }
         public string InteriorNumber { get; set; }
         public string ExteriorNumber { get; set; }
@@ -15,7 +13,6 @@ namespace PrintMersion.Core.DTOs
         public string City { get; set; }
         public string State { get; set; }
         public string Country { get; set; }
-
-        
+        public int Id { get; set; }
     }
 }
