@@ -1,200 +1,194 @@
-use master;
-go
+CREATE TABLE `Address` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `Street` varchar(64) NOT NULL,
+    `InteriorNumber` varchar(6) NULL,
+    `ExteriorNumber` varchar(6) NULL,
+    `ZipCode` varchar(6) NULL,
+    `city` varchar(20) NULL,
+    `State` varchar(20) NULL,
+    `Country` varchar(20) NULL,
+    PRIMARY KEY (`Id`)
+);
 
-if (exists (select name from master.dbo.sysdatabases where [name] = 'PrintMersionDB'))
-drop database PrintMersionDB;
+CREATE TABLE `Administers` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `FirstName` varchar(20) NOT NULL,
+    `LastName` varchar(32) NOT NULL,
+    `Email` varchar(64) NOT NULL,
+    `Phone` varchar(20) NULL,
+    `UserName` varchar(6) NOT NULL,
+    `Password` varchar(64) NOT NULL,
+    `Role` varchar(15) NOT NULL,
+    PRIMARY KEY (`Id`)
+);
 
-go
+CREATE TABLE `Catalogs` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `Name` varchar(64) NOT NULL,
+    `Description` text NULL,
+    PRIMARY KEY (`Id`)
+);
 
-create database PrintMersionDB;
-go
-use PrintMersionDB;
-go
+CREATE TABLE `Pictures` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `Metadata` text NULL,
+    `DataRaw` varchar(1) NULL,
+    PRIMARY KEY (`Id`)
+);
 
+CREATE TABLE `Products` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `Name` varchar(20) NOT NULL,
+    `Category` varchar(16) NOT NULL,
+    `Description` text NULL,
+    `Price` double NOT NULL,
+    PRIMARY KEY (`Id`)
+);
 
-if object_id('Product') is not null
-drop table Product;
+CREATE TABLE `Tools` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `Name` varchar(20) NOT NULL,
+    `Model` varchar(32) NOT NULL,
+    `Description` text NULL,
+    `Status` varchar(16) NOT NULL,
+    `Type` varchar(16) NOT NULL,
+    PRIMARY KEY (`Id`)
+);
 
-if object_id('Catalogs') is not null
-drop table Catologs;
+CREATE TABLE `Customers` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `FirstName` varchar(20) NOT NULL,
+    `LastName` varchar(32) NOT NULL,
+    `Email` varchar(64) NOT NULL,
+    `IdAddress` int NULL,
+    `Phone` varchar(10) NULL,
+    PRIMARY KEY (`Id`),
+    CONSTRAINT `fk_Customers_Address` FOREIGN KEY (`IdAddress`) REFERENCES `Address` (`Id`) ON DELETE RESTRICT
+);
 
-if object_id('Orders') is not null
-drop table Orders;
+CREATE TABLE `Administers_Pictures` (
+    `IdAdministers` int NOT NULL,
+    `IdPicture` int NOT NULL,
+    CONSTRAINT `fk_Administers_Pictures_Administers` FOREIGN KEY (`IdAdministers`) REFERENCES `Administers` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `fk_Administers_Pictures_Pictures` FOREIGN KEY (`IdPicture`) REFERENCES `Pictures` (`Id`) ON DELETE RESTRICT
+);
 
-if object_id('Customers') is not null
-drop table Customers;
+CREATE TABLE `Catalogs_Pictures` (
+    `IdCatalog` int NOT NULL,
+    `IdPicture` int NOT NULL,
+    CONSTRAINT `fk_Catalogs_Pictures_Catalogs` FOREIGN KEY (`IdCatalog`) REFERENCES `Catalogs` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `fk_Catalogs_Pictures_Pictures` FOREIGN KEY (`IdPicture`) REFERENCES `Pictures` (`Id`) ON DELETE RESTRICT
+);
 
-if object_id('Administers') is not null
-drop table Administers;
+CREATE TABLE `Catalogs_Products` (
+    `IdProduct` int NOT NULL,
+    `IdCatalog` int NOT NULL,
+    CONSTRAINT `fk_Catalogs_Products_Catalogs` FOREIGN KEY (`IdCatalog`) REFERENCES `Catalogs` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `fk_Catalogs_Products_Products` FOREIGN KEY (`IdProduct`) REFERENCES `Products` (`Id`) ON DELETE RESTRICT
+);
 
-if object_id('Pictures') is not null
-drop table Pictures;
+CREATE TABLE `Products_Pictures` (
+    `IdProduct` int NOT NULL,
+    `IdPicture` int NOT NULL,
+    CONSTRAINT `fk_Products_Pictures_Pictures` FOREIGN KEY (`IdPicture`) REFERENCES `Pictures` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `fk_Products_Pictures_Products` FOREIGN KEY (`IdProduct`) REFERENCES `Products` (`Id`) ON DELETE RESTRICT
+);
 
-if object_id('Tools') is not null
-drop table Tools;
+CREATE TABLE `LogsTools` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `IdTool` int NOT NULL,
+    `IdAdminister` int NOT NULL,
+    `StartUse` datetime NOT NULL,
+    `EndUse` datetime NOT NULL,
+    PRIMARY KEY (`Id`),
+    CONSTRAINT `fk_LogsTools_Administers` FOREIGN KEY (`IdAdminister`) REFERENCES `Administers` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `fk_LogsTools_Tool` FOREIGN KEY (`IdTool`) REFERENCES `Tools` (`Id`) ON DELETE RESTRICT
+);
 
-if object_id('Address') is not null
-drop table [Address];
+CREATE TABLE `Tools_Pictures` (
+    `IdTools` int NOT NULL,
+    `IdPicture` int NOT NULL,
+    CONSTRAINT `fk_Tools_Pictures_Pictures` FOREIGN KEY (`IdPicture`) REFERENCES `Pictures` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `fk_Tools_Pictures_Tools` FOREIGN KEY (`IdTools`) REFERENCES `Tools` (`Id`) ON DELETE RESTRICT
+);
 
-if object_id('LogsTools') is not null
-drop table LogsTools;
+CREATE TABLE `Customers_Pictures` (
+    `IdCustomer` int NOT NULL,
+    `IdPicture` int NOT NULL,
+    CONSTRAINT `fk_Customers_Pictures_Customers` FOREIGN KEY (`IdCustomer`) REFERENCES `Customers` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `fk_Customers_Pictures_Pictures` FOREIGN KEY (`IdPicture`) REFERENCES `Pictures` (`Id`) ON DELETE RESTRICT
+);
 
+CREATE TABLE `Orders` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `OrderDate` datetime NOT NULL,
+    `DeliveryDate` datetime NOT NULL,
+    `Address` int NULL,
+    `Subtotal` double NOT NULL,
+    `Total` double NOT NULL,
+    `DeliveryMethod` varchar(16) NOT NULL,
+    `DetailedInformation` text NULL,
+    `Tracking` varbinary(16) NOT NULL DEFAULT (newid()),
+    `Status` varchar(16) NOT NULL,
+    `PaymentMethod` varchar(16) NOT NULL,
+    `IdCustomer` int NOT NULL,
+    `IdAdminister` int NULL,
+    PRIMARY KEY (`Id`),
+    CONSTRAINT `fk_Orders_Administers` FOREIGN KEY (`IdAdminister`) REFERENCES `Administers` (`Id`) ON DELETE RESTRICT,
+    CONSTRAINT `fk_Orders_Customers` FOREIGN KEY (`IdCustomer`) REFERENCES `Customers` (`Id`) ON DELETE RESTRICT
+);
 
-CREATE TABLE Products(
-Id int not null IDENTITY(1, 1) unique,
-[Name] varchar(20) not null,
-Category varchar(16) not null,
-[Description] varchar(max),
-[Price] float not null,
-Constraint pk_Products primary key (Id)
-)
+CREATE UNIQUE INDEX `UQ__Address__3214EC0650DF4974` ON `Address` (`Id`);
 
-CREATE TABLE Catalogs(
-Id int not null IDENTITY(1, 1) unique,
-[Name] varchar(64) not null,
-[Description] varchar(max),
-Constraint pk_Catalogs primary key (Id)
-)
+CREATE UNIQUE INDEX `UQ__Administ__3214EC06F23652DC` ON `Administers` (`Id`);
 
+CREATE INDEX `IX_Administers_Pictures_IdAdministers` ON `Administers_Pictures` (`IdAdministers`);
 
+CREATE INDEX `IX_Administers_Pictures_IdPicture` ON `Administers_Pictures` (`IdPicture`);
 
-CREATE TABLE Pictures(
-Id Int not null IDENTITY(1, 1) unique,
-Metadata varchar(max),
-DataRaw varchar,
-constraint pk_Pictures primary key (Id)
-)
+CREATE UNIQUE INDEX `UQ__Catalogs__3214EC069D79A489` ON `Catalogs` (`Id`);
 
+CREATE INDEX `IX_Catalogs_Pictures_IdCatalog` ON `Catalogs_Pictures` (`IdCatalog`);
 
+CREATE INDEX `IX_Catalogs_Pictures_IdPicture` ON `Catalogs_Pictures` (`IdPicture`);
 
+CREATE INDEX `IX_Catalogs_Products_IdCatalog` ON `Catalogs_Products` (`IdCatalog`);
 
+CREATE INDEX `IX_Catalogs_Products_IdProduct` ON `Catalogs_Products` (`IdProduct`);
 
-CREATE TABLE Orders(
-Id int not null IDENTITY(1, 1) unique,
-OrderDate datetime not null,
-DeliveryDate datetime not null,
-[Address] int,
-Subtotal float not null,
-Total float not null,
-DeliveryMethod varchar(16) not null,
-DetailedInformation varchar(max),
-Tracking UNIQUEIDENTIFIER default NEWID() NOT NULL,
-[Status] varchar(16) not null,
-PaymentMethod varchar(16) not null,
-IdCustomer int not null,
-IdAdminister int,
-constraint pk_Orders primary key (Id))
+CREATE UNIQUE INDEX `UQ__Customer__3214EC06F6258619` ON `Customers` (`Id`);
 
+CREATE INDEX `IX_Customers_IdAddress` ON `Customers` (`IdAddress`);
 
-CREATE TABLE Customers(
-Id int not null IDENTITY(1, 1) unique,
-FirstName varchar(20) not null,
-LastName varchar(32) not null,
-Email varchar(64) not null,
-IdAddress int,
-Phone varchar(10),
-constraint pk_Custumers primary key (Id))
+CREATE INDEX `IX_Customers_Pictures_IdCustomer` ON `Customers_Pictures` (`IdCustomer`);
 
-CREATE TABLE Administers(
-Id Int not null IDENTITY(1, 1) unique,
-FirstName varchar(20) not null,
-LastName varchar(32) not null,
-Email varchar(64) not null,
-Phone varchar(10),
-UserName varchar(6) not null,
-[Password] varchar(64) not null,
-constraint pk_Administers primary key (Id))
+CREATE INDEX `IX_Customers_Pictures_IdPicture` ON `Customers_Pictures` (`IdPicture`);
 
-CREATE TABLE [Address](
-Id int not null IDENTITY(1, 1) unique,
-Street varchar(64) not null,
-InteriorNumber varchar(6),
-ExteriorNumber varchar(6),
-ZipCode varchar(6),
-city varchar(20),
-[State] varchar(20),
-Country varchar(20),
-constraint pk_Address primary key (Id))
+CREATE UNIQUE INDEX `UQ__LogsTool__3214EC06BB600FAA` ON `LogsTools` (`Id`);
 
-CREATE TABLE Tools(
-Id int not null IDENTITY(1, 1) unique,
-[Name] varchar(20) not null,
-Model varchar(32) not null,
-[Description] varchar(Max),
-[Status] varchar(16) not null,
-[Type] varchar(16) not null,
-constraint pk_Tools primary key (Id))
+CREATE INDEX `IX_LogsTools_IdAdminister` ON `LogsTools` (`IdAdminister`);
 
+CREATE INDEX `IX_LogsTools_IdTool` ON `LogsTools` (`IdTool`);
 
-Create table LogsTools(
-Id int not null IDENTITY(1, 1) unique,
-IdTool int not null,
-IdAdminister int not null,
-StartUse datetime not null,
-EndUse DateTime not null,
-constraint pk_LogsTools primary key (Id))
+CREATE UNIQUE INDEX `UQ__Orders__3214EC068F9DCEBA` ON `Orders` (`Id`);
 
-go
+CREATE INDEX `IX_Orders_IdAdminister` ON `Orders` (`IdAdminister`);
 
---Creacion de las relacion uno a muchos
+CREATE INDEX `IX_Orders_IdCustomer` ON `Orders` (`IdCustomer`);
 
-ALTER TABLE Orders add constraint fk_Orders_Customers foreign key (IdCustomer) references Customers(Id);
+CREATE UNIQUE INDEX `UQ__Pictures__3214EC069D4153E6` ON `Pictures` (`Id`);
 
-ALTER TABLE Orders add constraint fk_Orders_Administers foreign key (IdAdminister) references Administers(Id);
- 
-ALTER TABLE Customers add constraint fk_Customers_Address foreign key (IdAddress)  references [Address](Id);
+CREATE UNIQUE INDEX `UQ__Products__3214EC0658BFAAF7` ON `Products` (`Id`);
 
-ALTER TABLE LogsTools add constraint fk_LogsTools_Tool foreign key (IdTool)  references Tools(Id);
+CREATE INDEX `IX_Products_Pictures_IdPicture` ON `Products_Pictures` (`IdPicture`);
 
-ALTER TABLE LogsTools add constraint fk_LogsTools_Administers foreign key (IdAdminister)  references Administers(Id);
+CREATE INDEX `IX_Products_Pictures_IdProduct` ON `Products_Pictures` (`IdProduct`);
 
+CREATE UNIQUE INDEX `UQ__Tools__3214EC06EEF22EC7` ON `Tools` (`Id`);
 
-go
+CREATE INDEX `IX_Tools_Pictures_IdPicture` ON `Tools_Pictures` (`IdPicture`);
 
-
---Creacion de las relaciones muchos a muchos
-
-CREATE TABLE Products_Pictures(
-IdProduct int not null,
-IdPicture int not null,
-constraint fk_Products_Pictures_Products foreign key (IdProduct) references Products(Id),
-constraint fk_Products_Pictures_Pictures foreign key (IdPicture) references Pictures(Id)
-)
-
-CREATE TABLE Catalogs_Pictures(
-IdCatalog int not null,
-IdPicture int not null,
-constraint fk_Catalogs_Pictures_Catalogs foreign key (IdCatalog) references Catalogs(Id),
-constraint fk_Catalogs_Pictures_Pictures foreign key (IdPicture) references Pictures(Id)
-)
-
-CREATE TABLE Customers_Pictures(
-IdCustomer int not null,
-IdPicture int not null,
-constraint fk_Customers_Pictures_Customers foreign key (IdCustomer) references Customers(Id),
-constraint fk_Customers_Pictures_Pictures foreign key (IdPicture) references Pictures(Id)
-)
-
-CREATE TABLE Administers_Pictures(
-IdAdministers int not null,
-IdPicture int not null,
-constraint fk_Administers_Pictures_Administers foreign key (IdAdministers) references Administers(Id),
-constraint fk_Administers_Pictures_Pictures foreign key (IdPicture) references Pictures(Id)
-)
-
-CREATE TABLE Tools_Pictures(
-IdTools int not null,
-IdPicture int not null,
-constraint fk_Tools_Pictures_Tools foreign key (IdTools) references Tools(Id),
-constraint fk_Tools_Pictures_Pictures foreign key (IdPicture) references Pictures(Id)
-)
-
-CREATE TABLE Catalogs_Products(
-IdProduct int not null,
-IdCatalog int not null,
-constraint fk_Catalogs_Products_Products foreign key (IdProduct) references Products(Id),
-Constraint fk_Catalogs_Products_Catalogs foreign key (IdCatalog) references Catalogs(Id)
-)
+CREATE INDEX `IX_Tools_Pictures_IdTools` ON `Tools_Pictures` (`IdTools`);
 
 
 

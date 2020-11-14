@@ -1,7 +1,11 @@
-﻿namespace PrintMersion.Core.Entities
+﻿using PrintMersion.Core.Interfaces;
+
+namespace PrintMersion.Core.Entities
 {
-    public partial class ProductsPictures
+    public partial class ProductsPictures: IEntity
     {
+
+        public int Id { get; set; }
         public int IdProduct { get; set; }
         public int IdPicture { get; set; }
 

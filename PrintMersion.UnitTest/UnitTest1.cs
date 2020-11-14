@@ -1,41 +1,27 @@
+using Microsoft.EntityFrameworkCore;
 using PrintMersion.Infrastructure.Data;
 using Xunit;
 namespace PrintMersion.UnitTest
 {
-    public class UnitTest1
+    public class DatabaseUnitTest
     {
         [Fact]
-        public void Test1()
+        public void Testconexion()
         {
 
-            var res = new testClass<testPro>();
+          var  _dboption = new DbContextOptions<PrintMersionDBContext>();
 
-            res.GetType().GetProperty("propiedades").GetValue(res);
-        }
-    }
-
-    public class testClass<t> where t : new()
-    {
-        t propiedad { get; set; }
-
-        public testClass()
-        {
-            propiedad = new t();
-
-        }
-    }
-
-    public class testPro
-    {
-
-        PrintMersionDBContext Db { get; set; }
-
-        public testPro()
-        {
-            Db = new PrintMersionDBContext();
+            var _db = new PrintMersion.Infrastructure.Data.PrintMersionDBContext();
+          
+            
         }
 
+
+
     }
+
+    
+    
 
 
 }

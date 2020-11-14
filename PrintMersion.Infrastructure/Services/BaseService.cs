@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using PrintMersion.Core.Validations;
 
 namespace PrintMersion.Infrastructure.Services
 {
@@ -105,7 +106,7 @@ namespace PrintMersion.Infrastructure.Services
 
             List<IValidator<TEntity>> valis = new List<IValidator<TEntity>>();
 
-            var types = GetNamespacesInAssembly("PrintMersion.Infrastructure");
+            var types = GetNamespacesInAssembly("PrintMersion.Core.Validations");
 
             foreach (var item in types)
             {

@@ -1,12 +1,12 @@
 ﻿namespace PrintMersion.Api.Responses
 {
-    public class ApiResponse<T>
+    public class ApiResponse
     {
-        public ApiResponse(T data)
+        public ApiResponse(object data)
         {
             Data = data;
         }
 
-        public T Data { get; set; }
+        public object Data { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace PrintMersion.Core.Entities
         public DateTime StartUse { get; set; }
         public DateTime EndUse { get; set; }
 
-        public virtual Administer IdAdministerNavigation { get; set; }
+        public virtual User IdAdministerNavigation { get; set; }
         public virtual Tool IdToolNavigation { get; set; }
     }
 }

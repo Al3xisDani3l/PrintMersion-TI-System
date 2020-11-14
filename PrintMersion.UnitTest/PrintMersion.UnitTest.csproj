@@ -17,7 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PrintMersion.Core.Validations\PrintMersion.Core.Validations.csproj" />
     <ProjectReference Include="..\PrintMersion.Core\PrintMersion.Core.csproj" />
+    <ProjectReference Include="..\PrintMersion.Infrastructure.ApiClient\PrintMersion.Infrastructure.ApiClient.csproj" />
     <ProjectReference Include="..\PrintMersion.Infrastructure\PrintMersion.Infrastructure.csproj" />
     <ProjectReference Include="..\PrintMersionAPIRest\PrintMersion.Api.csproj" />
   </ItemGroup>

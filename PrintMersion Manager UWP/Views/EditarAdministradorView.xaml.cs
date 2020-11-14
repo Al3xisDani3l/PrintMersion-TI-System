@@ -1,18 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using PrintMersion.Core.Interfaces;
+using Windows.Storage.Pickers;
+using Windows.Storage;
+using PrintMersion.UWP.Controls;
+using PrintMersion.UWP.Extencions;
+using PrintMersion.Core.Entities;
+using PrintMersion.Infrastructure.ApiClient;
+using PrintMersion.Core.Globals;
+
+using System.IO;
+using Windows.UI.Xaml.Media.Imaging;
+
+
+
 // La plantilla de elemento Página en blanco está documentada en https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace PrintMersion.UWP.Views
@@ -38,11 +39,89 @@ namespace PrintMersion.UWP.Views
 
         public Type Type => type;
 
+        IGlobal _global;
+
         public EditarAdministradorView()
         {
+            _global = Startup.GetService<IGlobal>();
             this.InitializeComponent();
+
+            this.UserImage.OpenImage += UserImage_OpenImage;
+
+            this.UserImage.SaveImage += UserImage_SaveImage;
+
+          
+            
         }
 
-       
+        private async void UserImage_SaveImage(object sender, ImageSaveEventArgs e)
+        {
+            if (e.ImageInMemory != null)
+            {
+
+
+                using (var _user = new ClientRepositoryBase<User>(_global.ApiUri, _global.CurrentToken))
+                {
+
+
+
+                    _global.CurrentUser.IdPictureNavigation = new Picture()
+                    {
+                        Metadata = "png",
+                        DataRaw = await e.ImageInMemory.ToString64()
+                    };
+
+
+                    await _user.Put(_global.CurrentUser);
+
+                }
+            }
+
+                
+            
+        }
+
+        private async void UserImage_OpenImage(object sender, EventArgs e)
+        {
+
+            var imagectrol = (EditImageCtrl)sender;
+            var filePicker = new FileOpenPicker()
+            {
+                ViewMode = PickerViewMode.Thumbnail,
+                SuggestedStartLocation = PickerLocationId.PicturesLibrary,
+                FileTypeFilter = { ".png", ".jpg", ".jpeg" }
+
+            };
+            try
+            {
+                StorageFile file = await filePicker.PickSingleFileAsync();
+                if (imagectrol.Editor != null && file != null)
+                {
+                    await imagectrol.Editor.LoadImageFromFile(file);
+                }
+            }
+            catch (Exception Error)
+            {
+                //new Log(Error);
+
+            }
+        }
+
+        private async void Page_Loading(Windows.UI.Xaml.FrameworkElement sender, object args)
+        {
+            var pic = _global.CurrentUser.IdPictureNavigation;
+            if (pic != null)
+            {
+
+
+
+
+
+
+
+
+                this.UserImage.Editor.Source = await pic.DataRaw.ToWriteableBitmap();
+            }
+        }
     }
 }

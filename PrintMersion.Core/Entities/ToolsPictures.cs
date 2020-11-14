@@ -1,7 +1,10 @@
-﻿namespace PrintMersion.Core.Entities
+﻿using PrintMersion.Core.Interfaces;
+
+namespace PrintMersion.Core.Entities
 {
-    public partial class ToolsPictures
+    public partial class ToolsPictures:IEntity
     {
+        public int Id { get; set; }
         public int IdTools { get; set; }
         public int IdPicture { get; set; }
 

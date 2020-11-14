@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PrintMersion.Core.Entities;
+using PrintMersion.Core.Enumerations;
 using PrintMersion.Core.Interfaces;
+using System;
 
 namespace PrintMersion.Infrastructure.Data
 {
@@ -8,16 +10,18 @@ namespace PrintMersion.Infrastructure.Data
     {
         public PrintMersionDBContext()
         {
+        
         }
 
         public PrintMersionDBContext(DbContextOptions<PrintMersionDBContext> options)
             : base(options)
         {
+            
         }
 
         public virtual DbSet<Address> Address { get; set; }
-        public virtual DbSet<Administer> Administers { get; set; }
-        public virtual DbSet<AdministersPictures> AdministersPictures { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UsersPictures> UsersPictures { get; set; }
         public virtual DbSet<Catalog> Catalogs { get; set; }
         public virtual DbSet<CatalogsPictures> CatalogsPictures { get; set; }
         public virtual DbSet<CatalogsProducts> CatalogsProducts { get; set; }
@@ -30,9 +34,14 @@ namespace PrintMersion.Infrastructure.Data
         public virtual DbSet<ProductsPictures> ProductsPictures { get; set; }
         public virtual DbSet<Tool> Tools { get; set; }
         public virtual DbSet<ToolsPictures> ToolsPictures { get; set; }
+        public virtual DbSet<BotCustomer> BotCustomers { get; set; }
+      
+       
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
+          
             //            if (!optionsBuilder.IsConfigured)
             //            {
             //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
@@ -47,6 +56,8 @@ namespace PrintMersion.Infrastructure.Data
                 entity.HasIndex(e => e.Id)
                     .HasName("UQ__Address__3214EC0650DF4974")
                     .IsUnique();
+
+               
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
@@ -79,9 +90,16 @@ namespace PrintMersion.Infrastructure.Data
                 entity.Property(e => e.ZipCode)
                     .HasMaxLength(6)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Latitude)
+                .HasMaxLength(32)
+                .IsUnicode();
+                entity.Property(e => e.Latitude)
+                .HasMaxLength(32)
+                .IsUnicode();
             });
 
-            modelBuilder.Entity<Administer>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
                 entity.HasIndex(e => e.Id)
                     .HasName("UQ__Administ__3214EC06F23652DC")
@@ -106,7 +124,7 @@ namespace PrintMersion.Infrastructure.Data
 
                 entity.Property(e => e.Password)
                     .IsRequired()
-                    .HasMaxLength(64)
+                    .HasMaxLength(128)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Phone)
@@ -117,25 +135,43 @@ namespace PrintMersion.Infrastructure.Data
                     .IsRequired()
                     .HasMaxLength(6)
                     .IsUnicode(false);
+                entity.Property(e => e.Role)
+                  .HasColumnName("Role")
+                  .HasMaxLength(15)
+                  .IsRequired()
+                  .HasConversion(
+                   x => x.ToString(),
+                   x => (RoleType)Enum.Parse(typeof(RoleType), x)
+                   );
+              
+
+                entity.HasOne(d => d.IdPictureNavigation)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.IdPicture)
+                    .HasConstraintName("fk_User_Picture");
+
             });
 
-            modelBuilder.Entity<AdministersPictures>(entity =>
+            modelBuilder.Entity<UsersPictures>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
-                entity.ToTable("Administers_Pictures");
+               
 
-                entity.HasOne(d => d.IdAdministersNavigation)
+                entity.Property(e => e.IdUser).HasColumnName("IdUser");
+
+                entity.HasOne(d => d.IdUserNavigation)
                     .WithMany()
-                    .HasForeignKey(d => d.IdAdministers)
+                    .HasForeignKey(d => d.IdUser)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_Administers_Pictures_Administers");
+                    .HasConstraintName("fk_Users_Pictures_Users");
 
                 entity.HasOne(d => d.IdPictureNavigation)
                     .WithMany()
                     .HasForeignKey(d => d.IdPicture)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_Administers_Pictures_Pictures");
+                    .HasConstraintName("fk_Users_Pictures_Pictures");
             });
 
             modelBuilder.Entity<Catalog>(entity =>
@@ -156,7 +192,9 @@ namespace PrintMersion.Infrastructure.Data
 
             modelBuilder.Entity<CatalogsPictures>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
 
                 entity.ToTable("Catalogs_Pictures");
 
@@ -175,7 +213,8 @@ namespace PrintMersion.Infrastructure.Data
 
             modelBuilder.Entity<CatalogsProducts>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.ToTable("Catalogs_Products");
 
@@ -227,7 +266,8 @@ namespace PrintMersion.Infrastructure.Data
 
             modelBuilder.Entity<CustomersPictures>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.ToTable("Customers_Pictures");
 
@@ -298,12 +338,15 @@ namespace PrintMersion.Infrastructure.Data
                     .HasMaxLength(16)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Tracking).HasDefaultValueSql("(newid())");
+                entity.Property(e => e.Tracking).HasColumnType("char")
+                .HasMaxLength(36)
+                .IsUnicode(false).HasValueGenerator<GuidGenerator>().ValueGeneratedOnAdd();
+               
 
                 entity.HasOne(d => d.IdAdministerNavigation)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.IdAdminister)
-                    .HasConstraintName("fk_Orders_Administers");
+                    .HasConstraintName("fk_Orders_Users");
 
                 entity.HasOne(d => d.IdCustomerNavigation)
                     .WithMany(p => p.Orders)
@@ -321,8 +364,7 @@ namespace PrintMersion.Infrastructure.Data
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.DataRaw)
-                    .HasMaxLength(1)
-                    .IsUnicode(false);
+                    .IsUnicode(false).HasColumnType("LONGBLOB");
 
                 entity.Property(e => e.Metadata).IsUnicode(false);
             });
@@ -350,7 +392,8 @@ namespace PrintMersion.Infrastructure.Data
 
             modelBuilder.Entity<ProductsPictures>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.ToTable("Products_Pictures");
 
@@ -400,7 +443,8 @@ namespace PrintMersion.Infrastructure.Data
 
             modelBuilder.Entity<ToolsPictures>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.ToTable("Tools_Pictures");
 
@@ -417,9 +461,94 @@ namespace PrintMersion.Infrastructure.Data
                     .HasConstraintName("fk_Tools_Pictures_Tools");
             });
 
+            modelBuilder.Entity<BotCustomer>(entity => {
+
+                entity.HasIndex(e => e.Id)
+                        
+                        .IsUnique();
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Phone)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+
+
+
+                entity.Property(e => e.MessengerUserId)
+               .HasMaxLength(32)
+               .IsUnicode();
+
+                entity.Property(e => e.Gender)
+                .HasMaxLength(32)
+              .IsUnicode();
+
+                entity.Property(e => e.ProfilePicUrl)
+                 .HasMaxLength(128)
+              .IsUnicode();
+
+                entity.Property(e => e.TimeZone)
+                .HasMaxLength(32)
+             .IsUnicode();
+
+                entity.Property(e => e.Locale)
+                .HasMaxLength(32)
+             .IsUnicode();
+                entity.Property(e => e.Source)
+                .HasMaxLength(32)
+             .IsUnicode();
+                entity.Property(e => e.LastSeen)
+                .HasMaxLength(32)
+             .IsUnicode();
+
+                entity.Property(e => e.SignedUp)
+                .HasMaxLength(32)
+             .IsUnicode();
+                entity.Property(e => e.Sessions)
+                .HasMaxLength(32)
+             .IsUnicode();
+                entity.Property(e => e.LastVisitedBlockName)
+                .HasMaxLength(32)
+             .IsUnicode();
+                entity.Property(e => e.LastVisitedBlockId)
+                .HasMaxLength(32)
+             .IsUnicode();
+                entity.Property(e => e.LastClickedButtonName)
+                .HasMaxLength(32)
+             .IsUnicode();
+
+                entity.HasOne(d => d.IdAddressNavigation)
+                    .WithMany(p => p.BotCustomers)
+                    .HasForeignKey(d => d.IdAddress)
+                    .HasConstraintName("fk_BotCustomers_Address");
+
+
+
+            }
+            );
+         
+           
+
             OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
     }
 }

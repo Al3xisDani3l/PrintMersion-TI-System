@@ -6,8 +6,8 @@ namespace PrintMersion.Core.Interfaces
     public interface IDBContextModel
     {
         DbSet<Address> Address { get; set; }
-        DbSet<Administer> Administers { get; set; }
-        DbSet<AdministersPictures> AdministersPictures { get; set; }
+        DbSet<User> Users { get; set; }
+        DbSet<UsersPictures> UsersPictures { get; set; }
         DbSet<Catalog> Catalogs { get; set; }
         DbSet<CatalogsPictures> CatalogsPictures { get; set; }
         DbSet<CatalogsProducts> CatalogsProducts { get; set; }
@@ -20,5 +20,9 @@ namespace PrintMersion.Core.Interfaces
         DbSet<ProductsPictures> ProductsPictures { get; set; }
         DbSet<Tool> Tools { get; set; }
         DbSet<ToolsPictures> ToolsPictures { get; set; }
+        DbSet<BotCustomer> BotCustomers { get; set; }
+
+
+
     }
 }

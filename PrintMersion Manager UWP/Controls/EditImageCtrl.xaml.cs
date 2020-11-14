@@ -13,35 +13,24 @@ using Windows.UI.Xaml.Controls;
 
 namespace PrintMersion.UWP.Controls
 {
-    public enum Destiny
-    {
-        StorageFile,
-        SqlServer
-    }
+    
 
-    public sealed partial class EditImageCtrl : UserControl, INotifyPropertyChanged
+    public sealed partial class EditImageCtrl : UserControl
     {
 
-        public Destiny DestinoDeAbertura { get; set; } = Destiny.StorageFile;
-        public Destiny DestinoDeSalvado { get; set; } = Destiny.SqlServer;
+       
 
-        private InMemoryRandomAccessStream _inMemory = null;
 
 
         public InMemoryRandomAccessStream InMemory { get; set; }
 
-        public InMemoryRandomAccessStream InDatabase
-        {
-            get => _inMemory;
-            set
-            {
-                _inMemory = value;
-                OnPropertyChanged();
-            }
-        }
-
-
         public ImageCropper Editor { get => ImageCropper; }
+
+        public event EventHandler OpenImage;
+
+        public event EventHandler<ImageSaveEventArgs> SaveImage;
+
+      
 
         public EditImageCtrl()
         {
@@ -49,14 +38,22 @@ namespace PrintMersion.UWP.Controls
             Load();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
-#pragma warning disable CS0628 // Nuevo miembro protegido declarado en una clase sellada
-        protected void OnPropertyChanged([CallerMemberName] string property = "")
-#pragma warning restore CS0628 // Nuevo miembro protegido declarado en una clase sellada
+         void OnOpenImage(EventArgs e)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+            EventHandler handler = OpenImage;
+            handler?.Invoke(this, e);
         }
+
+        void OnSaveImage(ImageSaveEventArgs e)
+        {
+            EventHandler<ImageSaveEventArgs> handler = SaveImage;
+            handler?.Invoke(this, e);
+        }
+       
+
+
+     
 
         public void Load()
         {
@@ -124,138 +121,22 @@ namespace PrintMersion.UWP.Controls
         private async void BtnPickImage_Click(object sender, RoutedEventArgs e)
         {
 
-            switch (DestinoDeAbertura)
-            {
-                case Destiny.StorageFile:
-                    var filePicker = new FileOpenPicker()
-                    {
-                        ViewMode = PickerViewMode.Thumbnail,
-                        SuggestedStartLocation = PickerLocationId.PicturesLibrary,
-                        FileTypeFilter = { ".png", ".jpg", ".jpeg" }
 
-                    };
-                    try
-                    {
-                        StorageFile file = await filePicker.PickSingleFileAsync();
-                        if (ImageCropper != null && file != null)
-                        {
-                            await ImageCropper.LoadImageFromFile(file);
-                        }
-                    }
-                    catch (Exception Error)
-                    {
-                        //new Log(Error);
+            OnOpenImage(new EventArgs());
+                   
 
-                    }
-
-                    break;
-                case Destiny.SqlServer:
-
-                    if (InDatabase != null)
-                    {
-                        throw new NotSupportedException();
-                    }
-
-                    break;
-                default:
-                    break;
-            }
 
 
         }
 
         private async void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            switch (DestinoDeSalvado)
-            {
-                case Destiny.StorageFile:
-                    var savePicker = new FileSavePicker
+            var result = new InMemoryRandomAccessStream();
+            await ImageCropper.SaveAsync(result, BitmapFileFormat.Png);
 
-                    {
+            OnSaveImage(new ImageSaveEventArgs() { ImageInMemory = result });
 
-                        SuggestedStartLocation = PickerLocationId.PicturesLibrary,
-
-                        SuggestedFileName = "Cropped_Image",
-
-                        FileTypeChoices =
-
-                {
-
-                    { "PNG Picture", new List<string> { ".png" } },
-
-                    { "JPEG Picture", new List<string> { ".jpg" } }
-
-                }
-
-                    };
-
-
-                    var imageFile = await savePicker.PickSaveFileAsync();
-
-                    if (imageFile != null)
-
-                    {
-
-                        BitmapFileFormat bitmapFileFormat;
-
-                        switch (imageFile.FileType.ToLower())
-
-                        {
-
-                            case ".png":
-
-                                bitmapFileFormat = BitmapFileFormat.Png;
-
-                                break;
-
-                            case ".jpg":
-
-                                bitmapFileFormat = BitmapFileFormat.Jpeg;
-
-                                break;
-
-                            default:
-
-                                bitmapFileFormat = BitmapFileFormat.Png;
-
-                                break;
-
-                        }
-
-
-
-                        using (var fileStream = await imageFile.OpenAsync(FileAccessMode.ReadWrite, StorageOpenOptions.None))
-
-                        {
-
-                            await ImageCropper.SaveAsync(fileStream, bitmapFileFormat);
-
-                        }
-                    }
-
-                    break;
-
-                case Destiny.SqlServer:
-                    try
-                    {
-                        var result = new InMemoryRandomAccessStream();
-                        await ImageCropper.SaveAsync(result, BitmapFileFormat.Png);
-                        InDatabase = result;
-
-                    }
-                    catch (Exception Error)
-                    {
-
-                        //new Log(Error);
-                    }
-
-
-
-                    break;
-                default:
-                    break;
-            }
-
+           
         }
 
         private void BtnReset_Click(object sender, RoutedEventArgs e)
@@ -284,6 +165,11 @@ namespace PrintMersion.UWP.Controls
         public string Nombre { get; set; }
 
         public double? Radio { get; set; }
+    }
+
+    public class ImageSaveEventArgs : EventArgs
+    {
+     public InMemoryRandomAccessStream ImageInMemory { get; set; }
     }
 }
 

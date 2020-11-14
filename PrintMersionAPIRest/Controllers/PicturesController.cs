@@ -16,5 +16,8 @@ namespace PrintMersion.Api.Controllers
         public PicturesController(IRepository<Picture> Repository, IService<Picture> service) : base(Repository, service)
         {
         }
+
+
+
     }
 }

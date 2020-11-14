@@ -7,6 +7,12 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
+using PrintMersion.Core.Interfaces;
+using PrintMersion.Core.Entities;
+using PrintMersion.UWP.Infrastructure.Repositories;
+using PrintMersion.Core.Globals;
 
 namespace PrintMersion.UWP
 {
@@ -15,6 +21,10 @@ namespace PrintMersion.UWP
     /// </summary>
     sealed partial class App : Application
     {
+
+        public IServiceProvider Container { get; private set; }
+
+        public IServiceCollection services { get; set; }
         /// <summary>
         /// Inicializa el objeto de aplicación Singleton. Esta es la primera línea de código creado
         /// ejecutado y, como tal, es el equivalente lógico de main() o WinMain().
@@ -22,7 +32,10 @@ namespace PrintMersion.UWP
         public App()
         {
             this.InitializeComponent();
+
             this.Suspending += OnSuspending;
+
+            services = new ServiceCollection();
         }
 
         /// <summary>
@@ -30,8 +43,11 @@ namespace PrintMersion.UWP
         /// de entrada cuando la aplicación se inicie para abrir un archivo específico, por ejemplo.
         /// </summary>
         /// <param name="e">Información detallada acerca de la solicitud y el proceso de inicio.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override  void OnLaunched(LaunchActivatedEventArgs e)
         {
+
+             Startup.Init();
+
             Frame rootFrame = Window.Current.Content as Frame;
 
             // No repetir la inicialización de la aplicación si la ventana tiene contenido todavía,
@@ -91,6 +107,21 @@ namespace PrintMersion.UWP
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Guardar el estado de la aplicación y detener toda actividad en segundo plano
             deferral.Complete();
+        }
+
+
+        private async Task ConfigureServices(IServiceCollection services)
+        {
+
+           
+
+            
+
+            Container = services.BuildServiceProvider();
+
+            await Task.CompletedTask;
+
+
         }
 
 

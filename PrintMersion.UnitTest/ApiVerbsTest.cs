@@ -20,7 +20,7 @@ namespace PrintMersion.UnitTest
         {
             config();
 
-            List<Administer> result;
+            List<User> result;
 
 
 
@@ -30,7 +30,7 @@ namespace PrintMersion.UnitTest
             if (response.IsSuccessStatusCode)
             {
                 var serialize = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<List<Administer>>(serialize);
+                result = JsonConvert.DeserializeObject<List<User>>(serialize);
 
             }
 
