@@ -32,6 +32,9 @@ namespace PrintMersion.Infrastructure.Filters
                 context.HttpContext.Response.StatusCode = exception.Status;
                 context.ExceptionHandled = true;
             }
+
+
+
         }
     }
 }

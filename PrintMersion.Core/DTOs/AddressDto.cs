@@ -14,5 +14,7 @@ namespace PrintMersion.Core.DTOs
         public string State { get; set; }
         public string Country { get; set; }
         public int Id { get; set; }
+        public string Latitude { get; set; }
+        public string Logitude { get; set; }
     }
 }

@@ -21,6 +21,10 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using PrintMersion.UWP.Views;
+using PrintMersion.Infrastructure.ApiClient;
+using PrintMersion.Core.Entities;
+using PrintMersion.Core.Globals;
+using PrintMersion.UWP.Extencions;
 
 // La plantilla de elemento Página en blanco está documentada en https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -46,6 +50,8 @@ namespace PrintMersion.UWP
         Other
 
     }
+
+   
     /// <summary>
     /// Una página vacía que se puede usar de forma independiente o a la que se puede navegar dentro de un objeto Frame.
     /// </summary>
@@ -63,7 +69,12 @@ namespace PrintMersion.UWP
 
         //public ObservableCollection<NavigationViewItem> Otros { get; set; }
 
+        readonly string uriApi = @"https://printmersion.azurewebsites.net";
+
+
+
         private string NameOfuser;
+       
 
         public string UserName
         {
@@ -77,11 +88,18 @@ namespace PrintMersion.UWP
         }
 
 
+        IGlobal _global;
+        
+
         public MenuPage()
         {
+
+           
             this.InitializeComponent();
 
             Alls = new List<NavigationViewItemBase>();
+
+            _global = Startup.GetService<IGlobal>();
             //Categories = new ObservableCollection<selected>();
             //Calidad = new ObservableCollection<NavigationViewItem>();
             //Zrp1 = new ObservableCollection<NavigationViewItem>();
@@ -90,10 +108,10 @@ namespace PrintMersion.UWP
 
             //Categories.Add(new selected("Inicio", Symbol.Home, "home", typeof(HomePage)));
 
-        
 
-            //GenerateMultiple(selecteds);
-            //UserName = Usuario.CurrentUser.Nombre;
+
+
+
             //if (Usuario.CurrentUser.ProfileImage != null)
             //{
 
@@ -109,7 +127,7 @@ namespace PrintMersion.UWP
             //    }
 
             //}
-           
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -336,9 +354,6 @@ namespace PrintMersion.UWP
             On_BackRequested();
         }
 
-        
-
-
         #region AutoSuggestBox
 
         private void AsbOperaciones_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -374,17 +389,31 @@ namespace PrintMersion.UWP
 
         #endregion
 
-
         #region Eventos
 
         private async void Page_Loading(FrameworkElement sender, object args)
         {
+
+            UserName = _global.CurrentUser.FirstName;
 
             var result = await GetViews();
 
             Categories = new ObservableCollection<ICategorical>(result);
 
             Alls.AddRange(MenuItems(result));
+
+            try
+            {
+                PerPickProfile.ProfilePicture = await _global.CurrentUser.IdPictureNavigation.DataRaw.ToBitmapImage();
+            }
+            catch (Exception)
+            {
+
+                
+            }
+           
+
+           
             
         }
 

@@ -15,6 +15,7 @@ namespace PrintMersionAPIRest
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                  
                 });
     }
 }

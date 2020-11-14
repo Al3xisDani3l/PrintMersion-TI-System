@@ -12,6 +12,12 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+
+using PrintMersion.Core.Entities;
+using PrintMersion.Infrastructure.ApiClient;
+using PrintMersion.Core.Globals;
+using PrintMersion.UWP.Extencions;
+using PrintMersion.Core.Interfaces;
 // La plantilla de elemento Página en blanco está documentada en https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0xc0a
 
 namespace PrintMersion.UWP
@@ -22,10 +28,14 @@ namespace PrintMersion.UWP
     public sealed partial class MainPage : Page
     {
 
+        IGlobal _global;
 
         public MainPage()
         {
+            _global = Startup.GetService<IGlobal>();
             this.InitializeComponent();
+
+            
 
         }
 
@@ -43,22 +53,35 @@ namespace PrintMersion.UWP
             {
 
 
-                //Usuario user = await FindUser(txtUserName.Text);
+                _global.CurrentLogin = new UserLogin() { UserName = txtUserName.Text, Password = txtPassword.Password };
 
-                //if (user.Contraseña == txtPassword.Password)
-                //{
-                //    //user2.Profile = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri("ms-appx://Assets/Prueba.jpg"));
-                //    Usuario.CurrentUser = user;
-                   this.Frame.Navigate(typeof(MenuPage));
+                _global.CurrentToken = await ClientToken.GetToken(_global.CurrentLogin);
+
+
+                if (!string.IsNullOrEmpty(_global.CurrentToken))
+                {
+
+                    var _client = Startup.GetService<IRepository<User>>();
+                    
+                    var users = await _client.Get();
+
+                        _global.CurrentUser = users.Where(u => u.UserName.ToLowerInvariant().Contains(_global.CurrentLogin.UserName.ToLowerInvariant())).FirstOrDefault();
+                        
+                    
+
+                
+
+                    this.Frame.Navigate(typeof(MenuPage));
                     PBarLogin.ShowPaused = true;
-                //}
-                //else
-                //{
-                //    txtEstatusPassword.Text = "Contraseña incorrecta! Intente de nuevo.";
-                //    PBarLogin.Visibility = Visibility.Collapsed;
-                //    PBarLogin.ShowPaused = true;
+                }
 
-                //}
+                else
+                {
+                    txtEstatusPassword.Text = "Contraseña o usuario incorrecto! vuelve a intentar";
+                    PBarLogin.Visibility = Visibility.Collapsed;
+                    PBarLogin.ShowPaused = true;
+
+                }
             }
 
 
@@ -95,6 +118,19 @@ namespace PrintMersion.UWP
             {
                 BtnAceptar_Click(sender, new RoutedEventArgs());
 
+            }
+        }
+
+        private async void Page_Loading(FrameworkElement sender, object args)
+        {
+            if (_global.CurrentUser != null)
+            {
+                txtUserName.Text = _global.CurrentUser.UserName;
+
+                if (_global.CurrentUser.IdPictureNavigation.DataRaw != null)
+                {
+                    PepLogin.ProfilePicture = await _global.CurrentUser.IdPictureNavigation.DataRaw.ToBitmapImage();
+                }
             }
         }
     }

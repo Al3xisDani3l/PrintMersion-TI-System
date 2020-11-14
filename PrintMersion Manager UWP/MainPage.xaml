@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemControlAcrylicWindowBrush}" Height="Auto" Width="Auto" KeyDown="Page_KeyDown" >
+    Background="{ThemeResource SystemControlAcrylicWindowBrush}" Height="Auto" Width="Auto" KeyDown="Page_KeyDown" Loading="Page_Loading" >
 
     <Grid>
 
@@ -18,7 +18,7 @@
 
         </Grid.ColumnDefinitions>
 
-        <Image Grid.Column="0" Source="/Assets/SplashScreen.scale-200.png" Stretch="Fill" Margin="0,0,0,0" />
+        <Image Grid.Column="0" Source="/Assets/baseMenu.png" Stretch="Uniform" Margin="0,0,0,0" />
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
@@ -33,19 +33,19 @@
                 <ColumnDefinition Width="0.075*"/>
             </Grid.ColumnDefinitions>
             <!--Foreground="{ThemeResource MyAcrylicBrush}"-->
-            <PersonPicture x:Name="PepLogin" Grid.Row="0" Grid.Column="1"   VerticalAlignment="Top" Margin="0,60,0,0" Width="115" Height="115"  ProfilePicture="/Assets/SplashScreen.scale-200.png" Background="{StaticResource SystemAccentColorDark1}" />
+            <PersonPicture x:Name="PepLogin" Grid.Row="0" Grid.Column="1"   VerticalAlignment="Top" Margin="0,60,0,0" Width="115" Height="115"  ProfilePicture="/Assets/Square150x150Logo.scale-400.png" Background="{StaticResource SystemAccentColorDark1}" />
             <TextBlock x:Name="txblogin" Grid.Row="0" Grid.Column="1" Text="" VerticalAlignment="Bottom" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" FontSize="40"/>
-            <TextBox x:Name="txtUserName" Grid.Row="1" Grid.Column="1" Header="Introduce tu usuario:" PlaceholderText="UserName" VerticalAlignment="Center" HorizontalAlignment="Stretch"   FontFamily="Segoe UI"  Margin="60,16,60,0"  />
+            <TextBox x:Name="txtUserName" Grid.Row="1" Grid.Column="1" Header="Introduce tu usuario:" PlaceholderText="UserName" VerticalAlignment="Center" HorizontalAlignment="Stretch"   FontFamily="Segoe UI" FontSize="18"  Margin="60,16,60,0"  />
             <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <PasswordBox x:Name="txtPassword"  Header="Introduce tu contraseña" PlaceholderText="Password" VerticalAlignment="Center" HorizontalAlignment="Stretch"   Margin="60,19,60,0" DragEnter="TxtPassword_DragEnter" />
+                <PasswordBox x:Name="txtPassword"  Header="Introduce tu contraseña" PlaceholderText="Password" VerticalAlignment="Center" HorizontalAlignment="Stretch"   Margin="60,19,60,0" DragEnter="TxtPassword_DragEnter" FontSize="18" />
                 <TextBlock x:Name="txtEstatusPassword"    HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="60,6,0,10"/>
             </StackPanel>
 
             <StackPanel Grid.Row="3" Grid.Column="1">
-                <Button  x:Name="btnAceptar"    VerticalAlignment="Top"  HorizontalAlignment="Center"  Style="{ThemeResource AccentButtonStyle}" BorderBrush="{ThemeResource SystemControlBackgroundAccentRevealBorderBrush}"  Background="{ThemeResource SystemControlBackgroundAccentRevealBorderBrush}"  Margin="0,40,0,0" Content="Iniciar sesion" Width="130" Height="36" Click="BtnAceptar_Click"/>
-                <TextBlock Text="¿No tienes una cuenta?"  HorizontalAlignment="Center"  Margin="0,20,0,0" FontFamily="Segoe UI" />
+                <Button  x:Name="btnAceptar"    VerticalAlignment="Top"  HorizontalAlignment="Center"  Style="{ThemeResource AccentButtonStyle}" BorderBrush="{ThemeResource SystemControlBackgroundAccentRevealBorderBrush}"  Background="{ThemeResource SystemControlBackgroundAccentRevealBorderBrush}"  Margin="0,40,0,0" Content="Iniciar sesion" Width="150" Height="40" FontSize="18" Click="BtnAceptar_Click"/>
+                <TextBlock Text="¿No tienes una cuenta?"  HorizontalAlignment="Center"  Margin="0,20,0,0" FontFamily="Segoe UI" FontSize="16" />
                 <TextBlock HorizontalAlignment="Center" Margin="0,7.5,0,0" >
-                    <Hyperlink Click="Hyperlink_Click" FontFamily="Segoe UI">Registrar ahora</Hyperlink>
+                    <Hyperlink Click="Hyperlink_Click" FontFamily="Segoe UI" FontSize="16">Registrar ahora</Hyperlink>
                 </TextBlock>
             </StackPanel>
             <ProgressBar x:Name="PBarLogin" Grid.Row="3" IsIndeterminate="True" ShowPaused="True" Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom" Margin="0,0,0,10"/>

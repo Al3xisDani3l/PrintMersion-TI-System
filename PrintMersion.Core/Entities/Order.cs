@@ -18,7 +18,7 @@ namespace PrintMersion.Core.Entities
         public int IdCustomer { get; set; }
         public int? IdAdminister { get; set; }
 
-        public virtual Administer IdAdministerNavigation { get; set; }
+        public virtual User IdAdministerNavigation { get; set; }
         public virtual Customer IdCustomerNavigation { get; set; }
     }
 }
